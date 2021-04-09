@@ -90,7 +90,7 @@ class User < ApplicationRecord
   end
 
   def is_la_funded_user?
-    schools.la_funded_places.any?
+    schools.la_funded_place.any?
   end
 
   def has_multiple_schools?
