@@ -13,6 +13,10 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   scenario 'step through wizard as LA Funded Place' do
     as_a_new_la_funded_user
+    when_i_sign_in_for_the_first_time
+    when_i_click_continue
+    when_i_click_continue
+    then_i_see_amount_of_laptops
   end
 
 
@@ -166,7 +170,7 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def as_a_new_la_funded_user
-    @school = create(:la_funded_place)
+    @school = create(:la_funded_place, std_device_allocation: available_allocation)
     @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school, orders_devices: true)
   end
 
@@ -180,6 +184,13 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def when_i_sign_in_for_the_first_time
     visit validate_token_url_for(@user)
+  end
+
+  def then_i_see_amount_of_laptops
+    # <%= @rb_name %> has been allocated <span class="app-no-wrap">
+    # <%= @allocation %> laptops
+
+    expect(page).to have_text("#{school.responsible_body.name} has been allocated #{device_allocation}")    
   end
 
   def then_i_see_a_welcome_page_for_my_school

@@ -16,7 +16,7 @@ FactoryBot.define do
     sequence(:name) { |n| "#{Faker::Educator.secondary_school}-#{n}" }
     computacenter_reference { Faker::Number.number(digits: 8) }
     phase { School.phases.values.sample }
-    establishment_type { School.establishment_types.values.sample }
+    establishment_type { (School.establishment_types.values  - ['la_funded_place']).sample }
 
     address_1 { Faker::Address.street_name }
     address_2 { Faker::Address.secondary_address }
