@@ -89,6 +89,10 @@ class User < ApplicationRecord
     school.present?
   end
 
+  def is_la_funded_user?
+    schools.la_funded_places.any?
+  end
+
   def has_multiple_schools?
     schools.size > 1
   end
