@@ -11,6 +11,11 @@ RSpec.feature 'Navigate school welcome wizard' do
     allow(Gsuite).to receive(:is_gsuite_domain?).and_return(true)
   end
 
+  scenario 'step through wizard as LA Funded Place' do
+    as_a_new_la_funded_user
+  end
+
+
   scenario 'step through the wizard as the first user for a school that has available allocation' do
     given_my_school_has_an_available_allocation
     as_a_new_school_user
@@ -158,6 +163,11 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def as_a_new_school_user
     @user = create(:school_user, :new_visitor, :has_not_seen_privacy_notice, school: school, orders_devices: true)
+  end
+
+  def as_a_new_la_funded_user
+    @school = create(:la_funded_place)
+    @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school, orders_devices: true)
   end
 
   def as_a_subsequent_school_user

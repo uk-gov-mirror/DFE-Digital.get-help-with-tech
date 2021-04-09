@@ -89,6 +89,25 @@ FactoryBot.define do
       end
     end
 
+    factory :la_funded_place_user do
+      transient do
+        school { build(:la_funded_place) }
+      end
+      after(:build) do |user, evaluator|
+        user.schools << evaluator.school if user.schools.empty? && evaluator.school.present?
+      end
+
+      orders_devices { true }
+
+      trait :new_visitor do
+        after(:create) do |user|
+          user.school_welcome_wizards&.destroy_all
+          user.school_welcome_wizards << create(:school_welcome_wizard, user: user, school: user.school)
+        end
+      end
+    end
+
+
     factory :mno_user do
       association :mobile_network
     end
