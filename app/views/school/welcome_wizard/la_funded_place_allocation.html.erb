@@ -1,0 +1,58 @@
+<%- title = t('page_titles.school_user_welcome_wizard.allocation.title', allocation: @allocation) %>
+<%- content_for :title, title %>
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+    <%= form_for @wizard, url: welcome_wizard_school_path(step: @wizard.step) do |f| %>
+    <%= f.hidden_field :step %>
+
+
+        <h1 class="govuk-heading-xl">
+            <%= @rb_name %> has been allocated <span class="app-no-wrap"><%= @allocation %> laptops</span>
+        </h1>
+        <p class="govuk-body">
+            Your allocation estimate is based on the data <%= @rb_name %> submitted in the latest published alternative provision census (2020).
+        </p>
+        <p class="govuk-body">
+            We’ve allocated one laptop for each pupil in years 3 to 11 that <%= @rb_name %> reported as having a state-funded place at an independent setting, and also being eligible for free school meals.
+        </p>
+
+        <p class="govuk-body">
+            You can request internet access for these pupils if they need it too.
+        </p>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+                Tell us if your allocation is wrong
+            </span>
+            </summary>
+            <div class="govuk-details__text">
+            <p class="govuk-body">
+                Tell us how many pupils <%= @rb_name %> funds who:
+            </p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>
+                have a place at an independent special setting, or independent alternative provision
+                </li>
+                <li>
+                are eligible for free school meals
+                </li>
+                <li>
+                do not have access to a suitable device for remote education, and for use in face-to-face learning
+                </li>
+            </ul>
+            <p class="govuk-body">
+                Do not send any personal information, like names of pupils or dates of birth.
+            </p>
+            <p class="govuk-body">
+                Email this information to <a href="">COVID.TECHNOLOGY@education.gov.uk</a>.
+            </p>
+            </div>
+        </details>
+
+    <%= f.govuk_submit 'Continue' %>
+    <%- end %>
+  </div>
+</div>

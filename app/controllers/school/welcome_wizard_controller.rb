@@ -19,6 +19,12 @@ class School::WelcomeWizardController < School::BaseController
 
   def allocation
     @allocation = @school.std_device_allocation&.allocation || 0
+    if @school.la_funded_place_establishment_type?
+      @rb_name = @school.responsible_body.name
+      render 'la_funded_place_allocation'
+    else
+      render
+    end
   end
 
   def will_other_order; end
