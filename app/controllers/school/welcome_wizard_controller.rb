@@ -29,7 +29,13 @@ class School::WelcomeWizardController < School::BaseController
 
   def will_other_order; end
 
-  def devices_you_can_order; end
+  def devices_you_can_order
+    if @school.la_funded_place_establishment_type?
+      render 'la_funded_devices_you_can_order'
+    else
+      render
+    end
+  end
 
   def chromebooks; end
 
