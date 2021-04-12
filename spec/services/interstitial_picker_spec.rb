@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe InterstitialPicker, type: :model do
+RSpec.describe InterstitialPicker do
   describe 'calling interstitial picker for la funded place' do
     let(:school) { create :la_funded_place }
     let(:user) { create :user, schools: [school] }
