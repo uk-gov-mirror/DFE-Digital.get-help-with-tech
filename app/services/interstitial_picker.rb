@@ -10,7 +10,7 @@ class InterstitialPicker
                 OpenStruct.new(
                   title: 'Get laptops for state-funded pupils at independent settings',
                   partial: 'interstitials/la_funded_user',
-                ) 
+                )
               elsif user.is_school_user?
                 OpenStruct.new(
                   title: title_for_default,

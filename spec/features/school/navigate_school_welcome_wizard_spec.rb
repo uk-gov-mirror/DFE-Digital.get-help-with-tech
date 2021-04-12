@@ -14,11 +14,16 @@ RSpec.feature 'Navigate school welcome wizard' do
   scenario 'step through wizard as LA Funded Place' do
     as_a_new_la_funded_user
     when_i_sign_in_for_the_first_time
+    then_i_state_funded_interstitial
     when_i_click_continue
+    then_i_see_privacy_policy
     when_i_click_continue
     then_i_see_amount_of_laptops
+    when_i_click_continue
+    then_i_see_devices_you_can_order
+    when_i_click_continue
+    then_i_see_homepage
   end
-
 
   scenario 'step through the wizard as the first user for a school that has available allocation' do
     given_my_school_has_an_available_allocation
@@ -186,11 +191,24 @@ RSpec.feature 'Navigate school welcome wizard' do
     visit validate_token_url_for(@user)
   end
 
-  def then_i_see_amount_of_laptops
-    # <%= @rb_name %> has been allocated <span class="app-no-wrap">
-    # <%= @allocation %> laptops
+  def then_i_state_funded_interstitial
+    expect(page).to have_text("Get laptops and internet access for state-funded pupils at independent settings")
+  end
 
-    expect(page).to have_text("#{school.responsible_body.name} has been allocated #{device_allocation}")    
+  def then_i_see_privacy_policy
+    expect(page).to have_text("Before you continue, please read the privacy notice.")
+  end
+
+  def then_i_see_amount_of_laptops
+    expect(page).to have_text("#{school.responsible_body.name} has been allocated #{device_allocation}")
+  end
+
+  def then_i_see_devices_you_can_order
+    expect(page).to have_text("We recommend checking with independent settings as soon as possible to find out which device type and IT settings would be most suitable for each pupil.")
+  end
+
+  def then_i_see_homepage
+    expect(page).to have_text("place orders access the Computacenter TechSource website to order devices")
   end
 
   def then_i_see_a_welcome_page_for_my_school

@@ -26,12 +26,6 @@ class SchoolWelcomeWizard < ApplicationRecord
     if school.is_la_funded_place?
       case step
       when 'allocation'
-        if less_than_3_users_can_order?
-          will_other_order!
-        else
-          devices_you_can_order
-        end
-      when 'will_other_order'
         devices_you_can_order!
       when 'devices_you_can_order'
         complete!
