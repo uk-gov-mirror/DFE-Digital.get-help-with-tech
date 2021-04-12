@@ -23,56 +23,49 @@ class SchoolWelcomeWizard < ApplicationRecord
 
     return true if complete?
 
-    if school.is_la_funded_place?
-      case step
-      when 'allocation'
-        devices_you_can_order!
-      when 'devices_you_can_order'
-        complete!
-      end
-    else
-      case step
-      when 'allocation'
-        if school&.std_device_allocation&.has_devices_available_to_order?
-          if user_orders_devices?
-            techsource_account!
-          else
-            devices_you_can_order!
-          end
-        elsif user_orders_devices?
+    return la_funded_journey(step) if school.is_la_funded_place?
+
+    case step
+    when 'allocation'
+      if school&.std_device_allocation&.has_devices_available_to_order?
+        if user_orders_devices?
           techsource_account!
         else
           devices_you_can_order!
         end
-      when 'techsource_account'
-        if less_than_3_users_can_order?
-          will_other_order!
-        else
-          devices_you_can_order!
-        end
-      when 'will_other_order'
-        if update_will_other_order(params)
-          devices_you_can_order!
-        else
-          false
-        end
-      when 'devices_you_can_order'
-        if show_chromebooks_form?
-          chromebooks!
-        else
-          what_happens_next!
-        end
-      when 'chromebooks'
-        if update_chromebooks(params)
-          what_happens_next!
-        else
-          false
-        end
-      when 'what_happens_next'
-        complete!
+      elsif user_orders_devices?
+        techsource_account!
       else
-        raise "Unknown step: #{step}"
+        devices_you_can_order!
       end
+    when 'techsource_account'
+      if less_than_3_users_can_order?
+        will_other_order!
+      else
+        devices_you_can_order!
+      end
+    when 'will_other_order'
+      if update_will_other_order(params)
+        devices_you_can_order!
+      else
+        false
+      end
+    when 'devices_you_can_order'
+      if show_chromebooks_form?
+        chromebooks!
+      else
+        what_happens_next!
+      end
+    when 'chromebooks'
+      if update_chromebooks(params)
+        what_happens_next!
+      else
+        false
+      end
+    when 'what_happens_next'
+      complete!
+    else
+      raise "Unknown step: #{step}"
     end
   end
 
@@ -90,6 +83,15 @@ class SchoolWelcomeWizard < ApplicationRecord
   end
 
 private
+
+  def la_funded_journey(step)
+    case step
+    when 'allocation'
+      devices_you_can_order!
+    when 'devices_you_can_order'
+      complete!
+    end
+  end
 
   def force_current_step(step_name)
     send("#{step_name}!") if step != step_name && SchoolWelcomeWizard.steps.keys.include?(step_name)
