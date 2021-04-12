@@ -6,8 +6,8 @@ RSpec.describe InterstitialPicker do
     let(:user) { create :user, schools: [school] }
     let(:service) { described_class.new(user: user) }
 
-    context 'when a standard device allocation does not exist' do
-      it 'creates a new device allocation record' do
+    context 'when an interstitial picker' do
+      it 'route to interstitials/la_funded_user' do
         expect(service.call.partial).to eq 'interstitials/la_funded_user'
       end
     end
