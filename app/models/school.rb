@@ -78,7 +78,6 @@ class School < ApplicationRecord
     type == 'LaFundedPlace'
   end
 
-
   def available_mobile_networks
     if hide_networks_not_supporting_fe?
       MobileNetwork.fe_networks

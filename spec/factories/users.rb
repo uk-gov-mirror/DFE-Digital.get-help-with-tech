@@ -107,7 +107,6 @@ FactoryBot.define do
       end
     end
 
-
     factory :mno_user do
       association :mobile_network
     end

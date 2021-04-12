@@ -22,6 +22,7 @@ class LocalAuthority < ResponsibleBody
 
   def create_la_funded_places!(urn:, device_allocation: 0, router_allocation: 0, extra_args: {})
     return unless la_funded_place.nil?
+
     attrs = {
       responsible_body: self,
       urn: urn,
