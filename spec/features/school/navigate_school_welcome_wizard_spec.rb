@@ -176,7 +176,7 @@ RSpec.feature 'Navigate school welcome wizard' do
 
   def as_a_new_la_funded_user
     @school = create(:la_funded_place, std_device_allocation: available_allocation)
-    @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school, orders_devices: true)
+    @user = create(:la_funded_place_user, :new_visitor, :has_not_seen_privacy_notice, school: @school)
   end
 
   def as_a_subsequent_school_user
@@ -192,11 +192,11 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_state_funded_interstitial
-    expect(page).to have_text("Get laptops and internet access for state-funded pupils at independent settings")
+    expect(page).to have_text('Get laptops and internet access for state-funded pupils at independent settings')
   end
 
   def then_i_see_privacy_policy
-    expect(page).to have_text("Before you continue, please read the privacy notice.")
+    expect(page).to have_text('Before you continue, please read the privacy notice.')
   end
 
   def then_i_see_amount_of_laptops
@@ -204,11 +204,11 @@ RSpec.feature 'Navigate school welcome wizard' do
   end
 
   def then_i_see_devices_you_can_order
-    expect(page).to have_text("We recommend checking with independent settings as soon as possible to find out which device type and IT settings would be most suitable for each pupil.")
+    expect(page).to have_text('We recommend checking with independent settings as soon as possible to find out which device type and IT settings would be most suitable for each pupil.')
   end
 
   def then_i_see_homepage
-    expect(page).to have_text("place orders access the Computacenter TechSource website to order devices")
+    expect(page).to have_text('place orders access the Computacenter TechSource website to order devices')
   end
 
   def then_i_see_a_welcome_page_for_my_school
